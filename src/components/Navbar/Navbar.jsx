@@ -17,6 +17,11 @@ export default function Navbar(){
                 <button className="catalog-btn">
                  <Link to="/dashboard">Catalog</Link>
                 </button>
+
+                {user && !isAdmin &&
+                <button className="orders-btn">
+                 <Link to="/cart">My cart</Link>
+                </button>}
                 
                 {isAdmin && 
                 <button className="admin-btn">

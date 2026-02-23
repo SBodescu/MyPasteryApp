@@ -21,15 +21,32 @@ export const fetchProducts = createAsyncThunk('products/fetchAll', async (_, { r
 
 const initialState = {
     items: [],
+    cart: [],
     loading: false,
     error: null,
 };
 
 const productSlice = createSlice({
-    name: 'product',
+    name: 'products',
     initialState,
     reducers: {
-
+        addToCart: (state, action) => {
+            const product = action.payload;
+            const existingItem = state.cart.find(item => item.id === product.id);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                state.cart.push({ ...product, quantity: 1 });
+            }
+        },
+        removeFromCart: (state, action) => {
+            const id = action.payload;
+            state.cart = state.cart.filter(item => item.id !== id);
+        },
+            clearCart: (state) => {
+            state.cart = [];
+        }
     },
     extraReducers: (builder) => {
     builder
@@ -46,5 +63,5 @@ const productSlice = createSlice({
       });
   },
 });
-
+export const { addToCart, removeFromCart, clearCart } = productSlice.actions;
 export default productSlice.reducer;

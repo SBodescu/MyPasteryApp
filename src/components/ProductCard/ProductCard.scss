@@ -15,17 +15,17 @@
   .product-image {
     width: 100px;
     height: 100px;
-    img {
-      border-radius: 20px;
-      object-fit: cover;
-      filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
-    }
+    border-radius: 20px;
+    object-fit: cover;
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
+    
   }
 
   .product-info {
     display: flex;
     flex: 1;
     flex-direction: row;
+    gap: 1rem;
     h3 { color: $primary-dark; font-weight: 700; margin-bottom: 5px; }
     .price { color: $primary-dark; font-weight: 600; opacity: 0.8; }
   }

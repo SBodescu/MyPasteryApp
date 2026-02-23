@@ -18,7 +18,7 @@ export default function Dashboard(){
       <h1 className="main-title">Desserts</h1>
       <div className="products-list">
         {loading ? (
-          <p>Se pregătesc deserturile...</p>
+          <p>Loading products...</p>
         ) : (
           items.map(product => (
             <ProductCard key={product.id} product={product} />
