@@ -24,6 +24,9 @@
   }
 
   .nav-links {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
     button, .login-btn {
       background: rgba(39, 48, 90, 0.05);
       border: none;

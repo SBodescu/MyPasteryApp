@@ -8,7 +8,7 @@ export default function Layout(){
       <main className="content">
         <Outlet />
       </main>
-      <footer>© 2026 Pastery Copyright</footer>
+      <footer className="footer-content">© 2026 Pastery Copyright</footer>
     </div>
   );
 }
