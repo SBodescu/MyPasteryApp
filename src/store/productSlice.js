@@ -30,23 +30,35 @@ export const addToDB = createAsyncThunk('products/addToDB', async (product, { re
       console.error("Supabase Error:", error.message);
       return rejectWithValue(error.message);
     }
+    
   } catch (err) {
     return rejectWithValue(err.message);
   }
 });
 
 export const updateInDB = createAsyncThunk('products/updateInDB', async (product, { rejectWithValue }) => {
+  if (!product.id) {
+      throw new Error("ID-ul produsului lipsește din datele de update!");
+    }
   try {
     const { data, error } = await supabase
       .from('products')
-      .update(product)
-      .eq('id', product.id)
+      .update({
+        name: product.name,
+        price: product.price,
+        category: product.category,
+        description: product.description,
+        image_url: product.image_url
+      })
+      .eq('id', product.id) 
       .select();
       
     if (error) {
       console.error("Supabase Error:", error.message);
       return rejectWithValue(error.message);
     }
+    console.log("Produs actualizat în DB:", data);
+    return data;
   } catch (err) {
     return rejectWithValue(err.message);
   }

@@ -1,8 +1,8 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { clearCart, removeFromCart } from '../store/productSlice';
-import { placeOrder } from '../store/orderSlice';
+import { clearCart, removeFromCart } from '../../store/productSlice';
+import { placeOrder } from '../../store/orderSlice';
 import { useNavigate } from 'react-router-dom';
-import '../styles/_cart.scss';
+import './Cart.scss';
 
 export default function Cart() {
     const { cart } = useSelector((state) => state.products);

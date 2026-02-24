@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import InventoryManager from '../components/InventoryManager/InventoryManager';
+import InventoryManager from '../../components/InventoryManager/InventoryManager';
 
 export default function Admin(){
     return (

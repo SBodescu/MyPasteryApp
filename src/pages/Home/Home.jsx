@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import ProductCard from '../components/ProductCard/ProductCard';
-import '../styles/_landing.scss';
+import ProductCard from '../../components/ProductCard/ProductCard';
+import './Home.scss';
 
 const Landing = () => {
   const navigate = useNavigate();
