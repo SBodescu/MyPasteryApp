@@ -19,6 +19,55 @@ export const fetchProducts = createAsyncThunk('products/fetchAll', async (_, { r
   }
 });
 
+export const addToDB = createAsyncThunk('products/addToDB', async (product, { rejectWithValue }) => {
+  try {
+    const { data, error } = await supabase
+      .from('products')
+      .insert([product])
+      .select();
+      
+    if (error) {
+      console.error("Supabase Error:", error.message);
+      return rejectWithValue(error.message);
+    }
+  } catch (err) {
+    return rejectWithValue(err.message);
+  }
+});
+
+export const updateInDB = createAsyncThunk('products/updateInDB', async (product, { rejectWithValue }) => {
+  try {
+    const { data, error } = await supabase
+      .from('products')
+      .update(product)
+      .eq('id', product.id)
+      .select();
+      
+    if (error) {
+      console.error("Supabase Error:", error.message);
+      return rejectWithValue(error.message);
+    }
+  } catch (err) {
+    return rejectWithValue(err.message);
+  }
+});
+
+export const deleteFromDB = createAsyncThunk('products/deleteFromDB', async (id, { rejectWithValue }) => {
+  try {
+    const { data, error } = await supabase
+      .from('products')
+      .delete()
+      .eq('id', id);
+      
+    if (error) {
+      console.error("Supabase Error:", error.message);
+      return rejectWithValue(error.message);
+    }
+  } catch (err) {
+    return rejectWithValue(err.message);
+  }
+});
+
 const initialState = {
     items: [],
     cart: [],
@@ -44,7 +93,7 @@ const productSlice = createSlice({
             const id = action.payload;
             state.cart = state.cart.filter(item => item.id !== id);
         },
-            clearCart: (state) => {
+        clearCart: (state) => {
             state.cart = [];
         }
     },
@@ -60,6 +109,18 @@ const productSlice = createSlice({
       .addCase(fetchProducts.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
+      })
+      .addCase(addToDB.fulfilled, (state, action) => {
+        state.items.push(action.payload[0]);
+      })
+      .addCase(updateInDB.fulfilled, (state, action) => {
+        const index = state.items.findIndex(item => item.id === action.payload[0].id);
+        if (index !== -1) {
+          state.items[index] = action.payload[0];
+        }
+      })
+      .addCase(deleteFromDB.fulfilled, (state, action) => {
+        state.items = state.items.filter(item => item.id !== action.meta.arg);
       });
   },
 });

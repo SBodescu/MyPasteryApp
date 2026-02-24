@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../store/productSlice';
-import ProductCard from '../components/ProductCard/ProductCard';
+import ProductList from '../components/ProductList/ProductList';
 import '../styles/_dashboard.scss';
 
 export default function Dashboard(){
@@ -20,9 +20,7 @@ export default function Dashboard(){
         {loading ? (
           <p>Loading products...</p>
         ) : (
-          items.map(product => (
-            <ProductCard key={product.id} product={product} />
-          ))
+          <ProductList products={items} />
         )}
       </div>
     </div>

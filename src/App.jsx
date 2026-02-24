@@ -5,6 +5,7 @@ import Dashboard from './pages/Dashboard';
 import Layout from './pages/Layout';
 import Landing from './pages/Landing';
 import Cart from './pages/Cart';
+import Admin from './pages/Admin';
 
 
 export default function App() {
@@ -16,8 +17,9 @@ export default function App() {
         <Route element={<Layout />}>
           <Route path="/" element={<Landing />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/cart" element={<Cart />} />
+          <Route path="/cart" element={isAdmin ? <Cart /> : <Navigate to="/login" />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/admin" element={isAdmin ? <Admin /> : <Navigate to="/login" />} />
         </Route>
       </Routes>
     </Router>

@@ -1,9 +1,10 @@
 import './ProductCard.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../../store/productSlice';
+import { updateInDB, deleteFromDB} from '../../store/productSlice';
 
 export default function Product({ product, onAction }) {
-    const { user } = useSelector((state) => state.auth);
+    const { user, isAdmin } = useSelector((state) => state.auth);
     const { name, price, image_url, category, description } = product;
     const dispatch = useDispatch();
     
@@ -17,9 +18,15 @@ export default function Product({ product, onAction }) {
                 <p className="description">{description}</p>
                 <p className="price">{price} RON</p>
             </div>
-                { user&&
+                { user&& !isAdmin &&
                 <button className="order-btn" onClick={() => dispatch(addToCart(product))}>Comandă Acum</button>
     }
+                {isAdmin &&
+                <div className="admin-actions">
+                    <button className="edit-btn" onClick={() => dispatch(updateInDB(product))}>Edit</button> 
+                    <button className="delete-btn" onClick={() => dispatch(deleteFromDB(product.id))}>Delete</button>
+                </div>
+                }
         </div>
     )
 }
