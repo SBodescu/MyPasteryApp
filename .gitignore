@@ -141,3 +141,7 @@ vite.config.ts.timestamp-*
 .env
 
 .DS_Store
+
+.eslintrc.json
+
+.prettierrc

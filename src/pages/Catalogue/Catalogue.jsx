@@ -1,14 +1,13 @@
 import ProductList from '../../components/ProductList/ProductList';
-import './Catalog.scss';
+import './Catalogue.scss';
 
-export default function Dashboard(){
+export default function Catalogue() {
   return (
     <div className="dashboard-view">
       <h1 className="main-title">Desserts</h1>
       <div className="products-list">
-          <ProductList/>
+        <ProductList />
       </div>
     </div>
   );
-};
-
+}

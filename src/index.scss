@@ -8,13 +8,13 @@
   box-sizing: border-box;
 }
 
-a{
+a {
   text-decoration: none;
 }
 
 body {
   font-family: 'Inter', sans-serif;
-  background-color: #F8F9FE;
+  background-color: #f8f9fe;
   color: $primary-dark;
   -webkit-font-smoothing: antialiased;
 }
@@ -28,11 +28,11 @@ body {
 .content {
   flex: 1;
   padding: 20px;
-  max-width: 100%; 
+  max-width: 100%;
   margin: 0 auto;
 }
 
-.footer-content{
+.footer-content {
   text-align: center;
   padding: 15px 0;
   font-size: 0.9rem;
