@@ -30,6 +30,12 @@ export default function Navbar() {
           </button>
         )}
 
+        {isAdmin && (
+          <button className="admin-btn">
+            <Link to="/orders">Orders</Link>
+          </button>
+        )}
+
         {user ? (
           <button onClick={() => dispatch(logout())} className="login-btn">
             Logout

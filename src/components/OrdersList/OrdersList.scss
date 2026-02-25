@@ -1,0 +1,7 @@
+.orders-list {
+  min-width: 0;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}

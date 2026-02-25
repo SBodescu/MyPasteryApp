@@ -27,7 +27,7 @@ export default function Cart() {
       if (!result.error) {
         dispatch(clearCart());
         alert('Comanda a fost înregistrată cu succes!');
-        navigate('/dashboard');
+        navigate('/catalogue');
       } else {
         alert('Eroare la plasarea comenzii: ' + result.payload);
       }
