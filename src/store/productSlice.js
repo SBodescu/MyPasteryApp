@@ -69,6 +69,31 @@ export const updateProductInCatalogue = createAsyncThunk(
   }
 );
 
+export const restoreProudctInCatalogue = createAsyncThunk(
+  'products/restoreProductInCatalogue',
+  async (product, { rejectWithValue }) => {
+    if (!product.id) {
+      throw new Error('ID-ul produsului lipsește din datele de restore!');
+    }
+    try {
+      const { data, error } = await supabase
+        .from('products')
+        .update({ isDeleted: false })
+        .eq('id', product.id)
+        .select();
+
+      if (error) {
+        console.error('Supabase Error:', error.message);
+        return rejectWithValue(error.message);
+      }
+      console.log('Produs restaurat în DB:', data);
+      return data;
+    } catch (err) {
+      return rejectWithValue(err.message);
+    }
+  }
+);
+
 export const deleteProductFromCatalogue = createAsyncThunk(
   'products/deleteProductFromCatalogue',
   async (product, { rejectWithValue }) => {
@@ -143,6 +168,12 @@ const productSlice = createSlice({
       })
       .addCase(deleteProductFromCatalogue.fulfilled, (state, action) => {
         state.items = state.items.filter((item) => item.id !== action.payload[0].id);
+      })
+      .addCase(restoreProudctInCatalogue.fulfilled, (state, action) => {
+        const index = state.items.findIndex((item) => item.id === action.payload[0].id);
+        if (index !== -1) {
+          state.items[index] = { ...state.items[index], isDeleted: false };
+        }
       });
   },
 });

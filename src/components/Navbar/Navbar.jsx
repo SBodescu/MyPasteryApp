@@ -26,7 +26,7 @@ export default function Navbar() {
 
         {isAdmin && (
           <button className="admin-btn">
-            <Link to="/admin">Admin Panel</Link>
+            <Link to="/inventory">Inventory</Link>
           </button>
         )}
 

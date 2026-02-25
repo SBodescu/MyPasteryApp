@@ -16,9 +16,12 @@ export default function App() {
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/catalogue" element={<Catalogue />} />
-          <Route path="/cart" element={user && !isAdmin ? <Cart /> : <Navigate to="/login" />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/admin" element={isAdmin ? <AdminDashboard /> : <Navigate to="/login" />} />
+          <Route path="/cart" element={user && !isAdmin ? <Cart /> : <Navigate to="/login" />} />
+          <Route
+            path="/inventory"
+            element={isAdmin ? <AdminDashboard /> : <Navigate to="/login" />}
+          />
         </Route>
       </Routes>
     </Router>
