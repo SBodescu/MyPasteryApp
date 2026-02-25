@@ -25,9 +25,13 @@
 
   .nav-links {
     display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
     gap: 1rem;
     flex-wrap: wrap;
-    button, .login-btn {
+    button,
+    .login-btn {
       background: rgba(39, 48, 90, 0.05);
       border: none;
       padding: 10px 20px;

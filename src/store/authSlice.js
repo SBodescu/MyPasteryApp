@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { supabase } from '../api/supabaseClient';
 
 export const loginUser = createAsyncThunk('auth/login', async ({ email, password }) => {
@@ -9,17 +9,17 @@ export const loginUser = createAsyncThunk('auth/login', async ({ email, password
 });
 
 const initialState = {
-    user: null,
-    role: null,
-    isAdmin: false,
-    loading: false,
-    error: null,
+  user: null,
+  role: null,
+  isAdmin: false,
+  loading: false,
+  error: null,
 };
 
 const authSlice = createSlice({
-    name: 'auth',
-    initialState,
-    reducers: {
+  name: 'auth',
+  initialState,
+  reducers: {
     setSession: (state, action) => {
       state.user = action.payload;
       state.role = action.payload?.user_metadata?.role || 'visitor';
@@ -30,11 +30,14 @@ const authSlice = createSlice({
       state.role = null;
       state.isAdmin = false;
       supabase.auth.signOut();
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(loginUser.pending, (state) => { state.loading = true; state.error = null; })
+      .addCase(loginUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload.user;
