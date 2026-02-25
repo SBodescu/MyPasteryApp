@@ -47,6 +47,11 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    transition: all 0.3s ease;
+    &.added {
+      background-color: #707db7;
+      transform: scale(1.05);
+    }
   }
   .admin-actions {
     display: flex;
