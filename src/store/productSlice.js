@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { getCartProducts, getFilters } from '../utils/localStorageHelpers';
 import { supabase } from '../api/supabaseClient';
 
 export const fetchProducts = createAsyncThunk(
@@ -117,7 +118,8 @@ export const deleteProductFromCatalogue = createAsyncThunk(
 
 const initialState = {
   items: [],
-  cart: [],
+  cart: getCartProducts(),
+  filters: getFilters(),
   loading: false,
   error: null,
 };
@@ -142,6 +144,9 @@ const productSlice = createSlice({
     },
     clearCart: (state) => {
       state.cart = [];
+    },
+    updateFilters: (state, action) => {
+      state.filters = { ...state.filters, ...action.payload };
     },
   },
   extraReducers: (builder) => {
@@ -177,5 +182,5 @@ const productSlice = createSlice({
       });
   },
 });
-export const { addToCart, removeFromCart, clearCart } = productSlice.actions;
+export const { addToCart, removeFromCart, clearCart, updateFilters } = productSlice.actions;
 export default productSlice.reducer;
