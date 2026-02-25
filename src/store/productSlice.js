@@ -139,8 +139,15 @@ const productSlice = createSlice({
       }
     },
     removeFromCart: (state, action) => {
-      const id = action.payload;
-      state.cart = state.cart.filter((item) => item.id !== id);
+      const productId = action.payload.id || action.payload;
+      const existingItem = state.cart.find((item) => item.id === productId);
+      if (existingItem) {
+        if (existingItem.quantity > 1) {
+          existingItem.quantity -= 1;
+        } else {
+          state.cart = state.cart.filter((item) => item.id !== productId);
+        }
+      }
     },
     clearCart: (state) => {
       state.cart = [];

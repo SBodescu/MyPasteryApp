@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchProducts } from '../../store/productSlice';
 import { useEffect } from 'react';
 import filterAndSortProducts from '../../utils/filterHelpers';
-import Filters from '../Filters/Filters';
+import Filters from '../ProductFilters/ProductFilters';
 import ProductCard from '../ProductCard/ProductCard';
 import './ProductList.scss';
 

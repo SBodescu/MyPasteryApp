@@ -1,16 +1,27 @@
-import './ProductCard.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../../store/productSlice';
-import DeleteModal from '../DeleteProductModal/DeleteProductModal';
-
 import { useState } from 'react';
+import DeleteModal from '../DeleteProductModal/DeleteProductModal';
+import './ProductCard.scss';
 
 export default function ProductCard({ product, onEdit }) {
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isAddedToCart, setIsAddedToCart] = useState(false);
   const { user, isAdmin } = useSelector((state) => state.auth);
   const { name, price, image_url, category, description } = product;
 
+  const addedText = 'Adăugat! ✓';
+  const notAddedText = 'Comandă Acum';
+
   const dispatch = useDispatch();
+
+  const handleAddToCart = () => {
+    dispatch(addToCart(product));
+    setIsAddedToCart(true);
+    setTimeout(() => {
+      setIsAddedToCart(false);
+    }, 1000);
+  };
 
   return (
     <div className="product-card">
@@ -22,8 +33,8 @@ export default function ProductCard({ product, onEdit }) {
         <p className="price">{price} RON</p>
       </div>
       {user && !isAdmin && (
-        <button className="order-btn" onClick={() => dispatch(addToCart(product))}>
-          Comandă Acum
+        <button className={`order-btn ${isAddedToCart ? 'added' : ''}`} onClick={handleAddToCart}>
+          {isAddedToCart ? addedText : notAddedText}
         </button>
       )}
       {isAdmin && (

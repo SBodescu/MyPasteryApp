@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { updateFilters } from '../../store/productSlice';
-import './Filters.scss';
+import './ProductFilters.scss';
 
 export default function Filters() {
   const categories = ['All', 'Torturi', 'Prajituri', 'Patiserie'];
@@ -17,7 +17,7 @@ export default function Filters() {
       <div className="search-filter">
         <input
           type="text"
-          name="search" // Corectat aici
+          name="search"
           placeholder="Search products..."
           value={filters.search || ''}
           onChange={handleFilterChange}
