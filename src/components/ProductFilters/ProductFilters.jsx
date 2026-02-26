@@ -3,7 +3,7 @@ import { updateFilters } from '../../store/productSlice';
 import './ProductFilters.scss';
 
 export default function Filters() {
-  const categories = ['All', 'Torturi', 'Prajituri', 'Patiserie'];
+  const categories = ['All', 'Cakes', 'Desserts', 'Bakery'];
   const filters = useSelector((state) => state.products.filters);
   const dispatch = useDispatch();
 

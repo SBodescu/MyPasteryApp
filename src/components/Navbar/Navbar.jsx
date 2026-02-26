@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../store/authSlice';
-import logoImg from '../../assets/logo.png';
 import './NavBar.scss';
 
 export default function Navbar() {
@@ -11,29 +10,31 @@ export default function Navbar() {
   return (
     <nav className="navbar">
       <div className="logo">
-        <Link to="/">Sweet Lab</Link>
+        <Link to="/" className="logo-text">
+          Sweet <span>Lab</span>
+        </Link>
       </div>
       <div className="nav-links">
-        <button className="catalog-btn">
-          <Link to="/catalogue">Catalog</Link>
-        </button>
+        <Link to="/catalogue" className="login-btn">
+          Catalog
+        </Link>
 
         {user && !isAdmin && (
-          <button className="orders-btn">
-            <Link to="/cart">My cart</Link>
-          </button>
+          <Link to="/cart" className="login-btn">
+            My cart
+          </Link>
         )}
 
         {isAdmin && (
-          <button className="admin-btn">
-            <Link to="/inventory">Inventory</Link>
-          </button>
+          <Link to="/inventory" className="login-btn">
+            Inventory
+          </Link>
         )}
 
         {isAdmin && (
-          <button className="admin-btn">
-            <Link to="/orders">Orders</Link>
-          </button>
+          <Link to="/orders" className="login-btn">
+            Orders
+          </Link>
         )}
 
         {user ? (

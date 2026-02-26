@@ -6,7 +6,6 @@ export default function OrderCard({ order }) {
   const { user, isAdmin } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const { id, items, status, total_price } = order;
-  console.log(items);
 
   return (
     <div className="order-card">
