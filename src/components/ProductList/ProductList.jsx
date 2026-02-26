@@ -5,6 +5,19 @@ import filterAndSortProducts from '../../utils/filterHelpers';
 import Filters from '../ProductFilters/ProductFilters';
 import ProductCard from '../ProductCard/ProductCard';
 import './ProductList.scss';
+import withLoading from '../../utils/hocs/loadingHoc';
+
+function ProductsGrid({ items, onEdit }) {
+  return (
+    <div className="product-list">
+      {items.map((item) => (
+        <ProductCard key={item.id} product={item} onEdit={onEdit} />
+      ))}
+    </div>
+  );
+}
+
+const ProductsGridWithLoading = withLoading(ProductsGrid);
 
 export default function ProductList({ onEdit }) {
   const [page, setPage] = useState(0);
@@ -30,20 +43,19 @@ export default function ProductList({ onEdit }) {
     .filter((item) => !item.isDeleted)
     .slice(startIndex, startIndex + itemsPerPage);
 
-  if (displayedItems == 0) {
+  if (displayedItems.length === 0 && !loading) {
     return <p>There are no products matching selected filters</p>;
   }
 
   return (
     <div className="product-list-container">
       <Filters />
-      <div className="product-list">
-        {loading && items.length === 0 ? (
-          <p>Se încarcă produsele...</p>
-        ) : (
-          displayedItems.map((item) => <ProductCard key={item.id} product={item} onEdit={onEdit} />)
-        )}
-      </div>
+      <ProductsGridWithLoading
+        isLoading={loading}
+        loadingMessage="Loading products catalogue..."
+        items={displayedItems}
+        onEdit={onEdit}
+      />
       {totalPages > 1 && (
         <div className="pagination">
           <button disabled={page === 0} onClick={() => setPage((p) => p - 1)}>
