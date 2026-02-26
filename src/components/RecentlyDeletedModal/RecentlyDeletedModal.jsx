@@ -2,9 +2,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { restoreProudctInCatalogue, fetchProducts } from '../../store/productSlice';
 import { useEffect } from 'react';
 import withLoading from '../../utils/hocs/loadingHoc';
-import './DeletedItemsModal.scss';
+import './RecentlyDeletedModal.scss';
 
-function DeletedItemsList({ items, onRestore }) {
+function DeletedItemsGrid({ items, onRestore }) {
   if (items.length === 0) {
     return <p className="empty-msg">No deleted items found.</p>;
   }
@@ -25,7 +25,7 @@ function DeletedItemsList({ items, onRestore }) {
   );
 }
 
-const DeletedItemsListWithLoading = withLoading(DeletedItemsList);
+const DeletedItemsListWithLoading = withLoading(DeletedItemsGrid);
 
 export default function RecentlyDeletedItemsModal({ onClose }) {
   const { items, loading } = useSelector((state) => state.products);

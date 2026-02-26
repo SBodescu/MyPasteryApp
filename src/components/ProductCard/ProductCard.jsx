@@ -12,8 +12,8 @@ export default function ProductCard({ product, onEdit }) {
 
   const isStaff = isAdmin || isWorker;
 
-  const addedText = 'Adăugat! ✓';
-  const notAddedText = 'Comandă Acum';
+  const addedText = 'Added to Cart! ✓';
+  const notAddedText = 'Add to Cart';
 
   const dispatch = useDispatch();
 

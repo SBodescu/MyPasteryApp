@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import './Cart.scss';
 import CartList from '../../components/CartList/CartList';
+import './Cart.scss';
 
 export default function Cart() {
   const navigate = useNavigate();

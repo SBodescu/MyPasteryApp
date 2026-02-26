@@ -1,13 +1,13 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchProducts } from '../../store/productSlice';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo, memo } from 'react';
 import filterAndSortProducts from '../../utils/filterHelpers';
 import Filters from '../ProductFilters/ProductFilters';
 import ProductCard from '../ProductCard/ProductCard';
 import './ProductList.scss';
 import withLoading from '../../utils/hocs/loadingHoc';
 
-function ProductsGrid({ items, onEdit }) {
+const ProductsGrid = memo(function ProductsGrid({ items, onEdit }) {
   return (
     <div className="product-list">
       {items.map((item) => (
@@ -15,11 +15,11 @@ function ProductsGrid({ items, onEdit }) {
       ))}
     </div>
   );
-}
+});
 
 const ProductsGridWithLoading = withLoading(ProductsGrid);
 
-export default function ProductList({ onEdit }) {
+function ProductList({ onEdit }) {
   const [page, setPage] = useState(0);
   const itemsPerPage = 6;
   const { items, filters, loading } = useSelector((state) => state.products);
@@ -35,13 +35,17 @@ export default function ProductList({ onEdit }) {
     setPage(0);
   }, [filters]);
 
-  const allFilteredItems = filterAndSortProducts(items, filters);
-  const totalFilteredCount = allFilteredItems.filter((item) => !item.isDeleted).length;
-  const totalPages = Math.ceil(totalFilteredCount / itemsPerPage) || 1;
+  const allFilteredItems = useMemo(() => {
+    return filterAndSortProducts(items, filters);
+  }, [items, filters]);
+
+  const activeItems = useMemo(() => {
+    return allFilteredItems.filter((item) => !item.isDeleted);
+  }, [allFilteredItems]);
+
+  const totalPages = Math.ceil(activeItems.length / itemsPerPage) || 1;
   const startIndex = page * itemsPerPage;
-  const displayedItems = allFilteredItems
-    .filter((item) => !item.isDeleted)
-    .slice(startIndex, startIndex + itemsPerPage);
+  const displayedItems = activeItems.slice(startIndex, startIndex + itemsPerPage);
 
   if (displayedItems.length === 0 && !loading) {
     return <p>There are no products matching selected filters</p>;
@@ -74,3 +78,5 @@ export default function ProductList({ onEdit }) {
     </div>
   );
 }
+
+export default memo(ProductList);

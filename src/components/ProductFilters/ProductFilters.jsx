@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { useCallback } from 'react';
 import { updateFilters } from '../../store/productSlice';
 import './ProductFilters.scss';
 
@@ -7,10 +8,13 @@ export default function Filters() {
   const filters = useSelector((state) => state.products.filters);
   const dispatch = useDispatch();
 
-  const handleFilterChange = (e) => {
-    const { name, value } = e.target;
-    dispatch(updateFilters({ [name]: value }));
-  };
+  const handleFilterChange = useCallback(
+    (e) => {
+      const { name, value } = e.target;
+      dispatch(updateFilters({ [name]: value }));
+    },
+    [dispatch]
+  );
 
   return (
     <div className="filters-container">
