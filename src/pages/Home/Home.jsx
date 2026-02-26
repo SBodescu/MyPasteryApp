@@ -1,12 +1,35 @@
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { fetchProducts } from '../../store/productSlice';
 import ProductCard from '../../components/ProductCard/ProductCard';
+import withLoading from '../../utils/hocs/loadingHoc';
 import './Home.scss';
+
+function FeaturedList({ products }) {
+  return (
+    <div className="featured-list">
+      {products.map((product) => (
+        <ProductCard key={product.id} product={product} />
+      ))}
+    </div>
+  );
+}
+
+const FeaturedListWithLoading = withLoading(FeaturedList);
 
 export default function Home() {
   const navigate = useNavigate();
-  const { items } = useSelector((state) => state.products);
-  const featured = items.slice(0, 3);
+  const dispatch = useDispatch();
+  const { items, loading } = useSelector((state) => state.products);
+
+  useEffect(() => {
+    if (items.length === 0) {
+      dispatch(fetchProducts());
+    }
+  }, [dispatch, items.length]);
+
+  const featured = items.filter((item) => !item.isDeleted).slice(0, 3);
 
   return (
     <div className="landing-view">
@@ -28,11 +51,11 @@ export default function Home() {
           <button onClick={() => navigate('/catalogue')}>See all</button>
         </div>
 
-        <div className="featured-list">
-          {featured.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
+        <FeaturedListWithLoading
+          isLoading={loading}
+          loadingMessage="Loading the most appreciated products..."
+          products={featured}
+        />
       </section>
     </div>
   );

@@ -1,8 +1,21 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchOrders } from '../../store/orderSlice';
-import OrderCard from '../OrderCard/OrderCard';
 import { useEffect, useState } from 'react';
+import OrderCard from '../OrderCard/OrderCard';
+import withLoading from '../../utils/hocs/loadingHoc';
 import './OrdersList.scss';
+
+function OrdersGrid({ orders }) {
+  return (
+    <div className="orders-list">
+      {orders.map((order) => (
+        <OrderCard key={order.id} order={order} />
+      ))}
+    </div>
+  );
+}
+
+const OrdersGridWithLoading = withLoading(OrdersGrid);
 
 export default function OrderList() {
   const [page, setPage] = useState(0);
@@ -28,13 +41,11 @@ export default function OrderList() {
 
   return (
     <div className="orders-container">
-      <div className="orders-list">
-        {loading ? (
-          <p>Loading orders...</p>
-        ) : (
-          displayedItems.map((order) => <OrderCard key={order.id} order={order} />)
-        )}
-      </div>
+      <OrdersGridWithLoading
+        isLoading={loading}
+        loadingMessage="Loadin orders..."
+        orders={displayedItems}
+      />
 
       {totalPages > 1 && (
         <div className="pagination">

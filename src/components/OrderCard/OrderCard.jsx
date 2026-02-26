@@ -3,9 +3,16 @@ import { updateOrderStatus } from '../../store/orderSlice';
 import './OrderCard.scss';
 
 export default function OrderCard({ order }) {
-  const { user, isAdmin, isWorker } = useSelector((state) => state.auth);
+  const { user, isAdmin } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const { id, items, status, total_price } = order;
+
+  const handleStatus = (newStatus) => {
+    if (newStatus === status) {
+      return;
+    }
+    dispatch(updateOrderStatus({ orderId: id, newStatus }));
+  };
 
   return (
     <div className="order-card">
@@ -35,16 +42,10 @@ export default function OrderCard({ order }) {
 
         {isAdmin && (
           <div className="order-actions">
-            <button
-              className="reject-btn"
-              onClick={() => dispatch(updateOrderStatus({ orderId: id, newStatus: 'rejected' }))}
-            >
+            <button className="reject-btn" onClick={() => handleStatus('rejected')}>
               Reject
             </button>
-            <button
-              className="accept-btn"
-              onClick={() => dispatch(updateOrderStatus({ orderId: id, newStatus: 'accepted' }))}
-            >
+            <button className="accept-btn" onClick={() => handleStatus('accepted')}>
               Accept
             </button>
           </div>

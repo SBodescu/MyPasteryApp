@@ -1,6 +1,6 @@
 import ProductList from '../ProductList/ProductList';
 import ProductModal from '../ProductModal/ProductModal';
-import DeletedItemsModal from '../RecentlyDeletedItemsModal/RecentlyDeletedItemsModal';
+import DeletedItemsModal from '../DeletedItemsModal/DeletedItemsModal';
 import { useState } from 'react';
 import './InventoryManager.scss';
 
