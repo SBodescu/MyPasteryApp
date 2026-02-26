@@ -7,8 +7,10 @@ import './ProductCard.scss';
 export default function ProductCard({ product, onEdit }) {
   const [isDeleting, setIsDeleting] = useState(false);
   const [isAddedToCart, setIsAddedToCart] = useState(false);
-  const { user, isAdmin } = useSelector((state) => state.auth);
+  const { user, isAdmin, isWorker } = useSelector((state) => state.auth);
   const { name, price, image_url, category, description } = product;
+
+  const isStaff = isAdmin || isWorker;
 
   const addedText = 'Adăugat! ✓';
   const notAddedText = 'Comandă Acum';
@@ -32,8 +34,12 @@ export default function ProductCard({ product, onEdit }) {
         <p className="description">{description}</p>
         <p className="price">{price} RON</p>
       </div>
-      {user && !isAdmin && (
-        <button className={`order-btn ${isAddedToCart ? 'added' : ''}`} onClick={handleAddToCart}>
+      {user && !isStaff && (
+        <button
+          className={`order-btn ${isAddedToCart ? 'added' : ''}`}
+          onClick={handleAddToCart}
+          disabled={isAddedToCart}
+        >
           {isAddedToCart ? addedText : notAddedText}
         </button>
       )}

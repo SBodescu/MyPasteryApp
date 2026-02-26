@@ -4,7 +4,8 @@ import { logout } from '../../store/authSlice';
 import './NavBar.scss';
 
 export default function Navbar() {
-  const { user, isAdmin } = useSelector((state) => state.auth);
+  const { user, isAdmin, isWorker } = useSelector((state) => state.auth);
+  const isStaff = isAdmin || isWorker;
   const dispatch = useDispatch();
 
   return (
@@ -19,7 +20,7 @@ export default function Navbar() {
           Catalog
         </Link>
 
-        {user && !isAdmin && (
+        {user && !isStaff && (
           <Link to="/cart" className="login-btn">
             My cart
           </Link>
@@ -31,7 +32,7 @@ export default function Navbar() {
           </Link>
         )}
 
-        {isAdmin && (
+        {isStaff && (
           <Link to="/orders" className="login-btn">
             Orders
           </Link>

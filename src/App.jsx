@@ -9,7 +9,8 @@ import AdminDashboard from './pages/AdminDashboard/AdminDashboard';
 import OrdersManager from './pages/OrdersManager/OrdersManager';
 
 export default function App() {
-  const { user, isAdmin } = useSelector((state) => state.auth);
+  const { user, isAdmin, isWorker } = useSelector((state) => state.auth);
+  const isStaff = isAdmin || isWorker;
 
   return (
     <Router>
@@ -18,8 +19,8 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/catalogue" element={<Catalogue />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/cart" element={user && !isAdmin ? <Cart /> : <Navigate to="/login" />} />
-          <Route path="/orders" element={isAdmin ? <OrdersManager /> : <Navigate to="/login" />} />
+          <Route path="/cart" element={user && !isStaff ? <Cart /> : <Navigate to="/login" />} />
+          <Route path="/orders" element={isStaff ? <OrdersManager /> : <Navigate to="/login" />} />
           <Route
             path="/inventory"
             element={isAdmin ? <AdminDashboard /> : <Navigate to="/login" />}

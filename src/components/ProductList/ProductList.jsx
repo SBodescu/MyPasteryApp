@@ -29,9 +29,11 @@ export default function ProductList({ onEdit }) {
   const displayedItems = allFilteredItems
     .filter((item) => !item.isDeleted)
     .slice(startIndex, startIndex + itemsPerPage);
+
   if (displayedItems == 0) {
-    return <p>Nu am găsit niciun produs conform filtrelor.</p>;
+    return <p>There are no products matching selected filters</p>;
   }
+
   return (
     <div className="product-list-container">
       <Filters />

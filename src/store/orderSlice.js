@@ -21,7 +21,10 @@ export const placeOrder = createAsyncThunk(
 
 export const fetchOrders = createAsyncThunk('order/fetchAll', async (_, { rejectWithValue }) => {
   try {
-    const { data, error } = await supabase.from('orders').select('*');
+    const { data, error } = await supabase
+      .from('orders')
+      .select('*')
+      .order('id', { ascending: false });
 
     if (error) {
       console.error('Supabase Error:', error.message);

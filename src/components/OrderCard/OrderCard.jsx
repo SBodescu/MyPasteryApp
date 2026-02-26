@@ -3,7 +3,7 @@ import { updateOrderStatus } from '../../store/orderSlice';
 import './OrderCard.scss';
 
 export default function OrderCard({ order }) {
-  const { user, isAdmin } = useSelector((state) => state.auth);
+  const { user, isAdmin, isWorker } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const { id, items, status, total_price } = order;
 
@@ -29,7 +29,7 @@ export default function OrderCard({ order }) {
 
       <div className="order-footer">
         <div className="total-section">
-          <span>Total de plată</span>
+          <span>Total</span>
           <div className="total-amount">{total_price} RON</div>
         </div>
 
