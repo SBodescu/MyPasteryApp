@@ -10,6 +10,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+  z-index: 2000;
+
   .modal-content {
     background-color: #fff;
     padding: 30px;
