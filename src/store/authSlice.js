@@ -12,6 +12,7 @@ const initialState = {
   user: null,
   role: null,
   isAdmin: false,
+  isWorker: false,
   loading: false,
   error: null,
 };
@@ -29,6 +30,7 @@ const authSlice = createSlice({
       state.user = null;
       state.role = null;
       state.isAdmin = false;
+      state.isWorker = false;
       supabase.auth.signOut();
     },
   },
@@ -43,6 +45,7 @@ const authSlice = createSlice({
         state.user = action.payload.user;
         state.role = action.payload.role;
         state.isAdmin = action.payload.role === 'admin';
+        state.isWorker = action.payload.role === 'worker';
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
