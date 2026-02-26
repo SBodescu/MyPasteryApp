@@ -6,7 +6,7 @@ import ProductCard from '../../components/ProductCard/ProductCard';
 import withLoading from '../../utils/hocs/loadingHoc';
 import './Home.scss';
 
-function FeaturedList({ products }) {
+function MostRatedItemsGrid({ products }) {
   return (
     <div className="featured-list">
       {products.map((product) => (
@@ -16,7 +16,7 @@ function FeaturedList({ products }) {
   );
 }
 
-const FeaturedListWithLoading = withLoading(FeaturedList);
+const MostRatedItemsWithLoading = withLoading(MostRatedItemsGrid);
 
 export default function Home() {
   const navigate = useNavigate();
@@ -51,7 +51,7 @@ export default function Home() {
           <button onClick={() => navigate('/catalogue')}>See all</button>
         </div>
 
-        <FeaturedListWithLoading
+        <MostRatedItemsWithLoading
           isLoading={loading}
           loadingMessage="Loading the most appreciated products..."
           products={featured}

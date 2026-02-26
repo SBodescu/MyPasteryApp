@@ -1,7 +1,7 @@
 import ProductList from '../ProductList/ProductList';
 import ProductModal from '../ProductModal/ProductModal';
-import DeletedItemsModal from '../DeletedItemsModal/DeletedItemsModal';
-import { useState } from 'react';
+import DeletedItemsModal from '../RecentlyDeletedModal/RecentlyDeletedModal';
+import { useCallback, useState } from 'react';
 import './InventoryManager.scss';
 
 export default function InventoryManager() {
@@ -9,19 +9,19 @@ export default function InventoryManager() {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showDeletedItemsModal, setShowDeletedItemsModal] = useState(false);
 
-  const openDeletedItemsModal = () => {
+  const openDeletedItemsModal = useCallback(() => {
     setShowDeletedItemsModal(true);
-  };
+  }, []);
 
-  const openEditModal = (product) => {
+  const openEditModal = useCallback((product) => {
     setSelectedProduct(product);
     setShowProductModal(true);
-  };
+  }, []);
 
-  const openAddModal = () => {
+  const openAddModal = useCallback(() => {
     setSelectedProduct(null);
     setShowProductModal(true);
-  };
+  }, []);
 
   return (
     <div className="inventory-content">

@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { clearCart, removeFromCart } from '../../store/productSlice';
+import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { placeOrder } from '../../store/orderSlice';
 import './CartList.scss';
@@ -7,7 +8,9 @@ import './CartList.scss';
 export default function CartList() {
   const { cart } = useSelector((state) => state.products);
   const { user, loading } = useSelector((state) => state.auth);
-  const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const total = useMemo(() => {
+    return cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  }, [cart]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
