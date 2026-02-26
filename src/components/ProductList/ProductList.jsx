@@ -63,15 +63,15 @@ function ProductList({ onEdit }) {
       {totalPages > 1 && (
         <div className="pagination">
           <button disabled={page === 0} onClick={() => setPage((p) => p - 1)}>
-            Înapoi
+            Back
           </button>
 
           <span>
-            Pagina {page + 1} din {totalPages}
+            Page {page + 1} of {totalPages}
           </span>
 
           <button disabled={page >= totalPages - 1} onClick={() => setPage((p) => p + 1)}>
-            Înainte
+            Next
           </button>
         </div>
       )}
