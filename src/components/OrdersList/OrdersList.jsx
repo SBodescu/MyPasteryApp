@@ -49,7 +49,9 @@ export default function OrderList() {
 
       {totalPages > 1 && (
         <div className="pagination">
-          <button disabled={page === 0} onClick={() => setPage((p) => p - 1)}></button>
+          <button disabled={page === 0} onClick={() => setPage((p) => p - 1)}>
+            Back
+          </button>
 
           <span>
             Page {page + 1} of {totalPages}

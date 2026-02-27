@@ -1,18 +1,26 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { clearCart, removeFromCart } from '../../store/productSlice';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { placeOrder } from '../../store/orderSlice';
 import './CartList.scss';
 
 export default function CartList() {
+  const [notification, setNotification] = useState(null);
   const { cart } = useSelector((state) => state.products);
   const { user, loading } = useSelector((state) => state.auth);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const total = useMemo(() => {
     return cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
   }, [cart]);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+
+  const renderNotification = () => {
+    if (!notification) return null;
+    return <div className={`cart-notif ${notification.type}`}>{notification.message}</div>;
+  };
 
   const handleCheckout = async () => {
     if (cart.length === 0) return;
@@ -26,11 +34,18 @@ export default function CartList() {
 
     dispatch(placeOrder(orderData)).then((result) => {
       if (!result.error) {
-        dispatch(clearCart());
-        alert('Comanda a fost înregistrată cu succes!');
-        navigate('/catalogue');
+        setNotification({ type: 'success', message: 'Your order was successfully placed!' });
+        setTimeout(() => {
+          dispatch(clearCart());
+          setNotification(null);
+          navigate('/catalogue');
+        }, 2000);
       } else {
-        alert('Eroare la plasarea comenzii: ' + result.payload);
+        setNotification({
+          type: 'error',
+          message: 'Eroare at checkout ' + result.payload,
+        });
+        setTimeout(() => setNotification(null), 5000);
       }
     });
   };
@@ -41,6 +56,7 @@ export default function CartList() {
 
   return (
     <div className="cart-list-container">
+      {renderNotification()}
       <div className="cart-items-list">
         {cart.map((item) => (
           <div key={item.id} className="cart-item-card">
